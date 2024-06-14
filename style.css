@@ -1,2 +1,120 @@
 /* PAGE REST */
 * {margin: 0; padding: 0; box-sizing: border-box;}
+
+body {
+    width: 100%;
+    height: 100dvh;
+
+    font-family: sans-serif;
+}
+
+main {
+    width: 100%;
+    height: 100%;
+
+    position: relative;
+
+}
+
+/* ======================= CONTENT STYLES ======================= */
+/* image gallery styles */
+.image_gallery {
+    width: 100%;
+    height: 100%;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-template-rows: auto;
+    gap: 10px;
+}
+.thumbnail_image {
+    background-color: blue;
+    width: inherit;
+    height: inherit;
+    aspect-ratio: 16 / 9;
+}
+.thumbnail_image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* lightbox styles */
+.lightbox_container {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100dvh;
+    
+    background: #0002;
+    backdrop-filter: blur(20px) brightness(0.2);
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.close-btn,
+.previous-btn,
+.next-btn {
+    width: 30px;
+    aspect-ratio: 1;
+}
+.close-btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.navigations {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+
+    width: min(50%, 200px);
+    background: red;
+    background: blue;
+
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+
+.close-btn img,
+.previous-btn img,
+.next-btn img {
+    width: 100%;
+    height: 100%;
+}
+.image_container {
+    width: 90%;
+    height: 90%;
+    aspect-ratio: 16 / 9;
+    background: red;
+
+    position: relative;
+}
+.caption {
+    width: 500px;
+    height: 150px;
+    background: green;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+
+
+
+
+
+/* SPECIAL CLASSES */
+.hidden {
+    display: none;
+}
+
+/* GENERAL STYLES */
+button {
+    cursor: pointer;
+}
