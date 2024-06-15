@@ -94,7 +94,7 @@ mainContainer.addEventListener('click', function(e) {
              </div>
             <!-- image container -->
             <figure class="image_container">
-                <img src="" alt="some image">
+                <img src="./assets/images/${imageDB[clickedId].imageURL}" alt="${imageDB[clickedId].caption}">
                 <!-- caption -->
                  <div class="caption_container">
                      <figcaption class="caption">${imageDB[clickedId].caption}</figcaption>
@@ -105,6 +105,7 @@ mainContainer.addEventListener('click', function(e) {
             </figure>
         </section>
         `
+        // ./assets/images/${image.imageURL}
         renderMarkup(mainContainer, 'beforeend', lightboxMarkup);
         
         return;
