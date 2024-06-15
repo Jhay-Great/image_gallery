@@ -219,12 +219,18 @@ mainContainer.addEventListener('click', function(e) {
 })
 
 const previousImage = function(e, index) {
-    const imgElement = e.target.closest('.lightbox_container').querySelector('figure > img')
+    const imgElement = e.target.closest('.lightbox_container').querySelector('figure > img');
+    const captionElement = e.target.closest('.lightbox_container').querySelector('figcaption');
     imgElement.setAttribute('src', `./assets/images/${imageDB[index - 1].imageURL}`);
+    imgElement.setAttribute('alt', `${imageDB[index - 1].caption}`);
+    captionElement.textContent = `${imageDB[index - 1].caption}`
 }
 const nextImage = function(e, index) {
     const imgElement = e.target.closest('.lightbox_container').querySelector('figure > img')
+    const captionElement = e.target.closest('.lightbox_container').querySelector('figcaption');
     imgElement.setAttribute('src', `./assets/images/${imageDB[index + 1].imageURL}`);
+    imgElement.setAttribute('alt', `${imageDB[index + 1].caption}`);
+    captionElement.textContent = `${imageDB[index + 1].caption}`
 }
 
 
