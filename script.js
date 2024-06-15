@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
             </div>
         `;
 
-        renderMarkup(galleryContainer, 'afterbegin', markup);
+        renderMarkup(galleryContainer, 'beforeend', markup);
     })
 })
 
@@ -68,9 +68,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
  */
 mainContainer.addEventListener('click', function(e) {
     if (e.target.closest('.thumbnail_image')) {
-        // console.log(e.target);
         clickedId = e.target.closest('.thumbnail_image').dataset.key;
-        console.dir(clickedId);
         // opening lightbox using classLists
         // lightboxContainer.classList.remove('hidden');
 
@@ -153,46 +151,37 @@ mainContainer.addEventListener('click', function(e) {
         // e.target.closest('.edit_caption').remove();
     }
     
-    // if e.target is cancel
+    // closing the edit popup
     if (e.target.classList.contains('ok') || e.target.classList.contains('cancel')) return e.target.closest('.edit_caption').remove();
 
     // implement a scenario if input was updated as blank it through an alert
 
+
+    // navigation - moving left or right
+    if (e.target.closest('.previous-btn')) {
+        console.log('previous');
+        console.log(imageDB[clickedId - 1]);
+    }
+
+    if (e.target.closest('.next-btn')) {
+        console.log('next')
+    }
+
 })
 
-// editing caption
-mainContainer.addEventListener('click', function(e) {
 
-})
+/**slide implementation
+ * when an image is clicked or when the lightbox modal is opened show all the images
+ * load or select all the images as an array of images or content
+ * the clicked image would be on display
+ * next and previous button would iterate through displaying the images
+ * so the current image would be the index or the date-key
+ * iterate using the index or the data key
+ */
 
 
 
-// editBtn?.addEventListener('click', function(e) {
-//     const editPopupMarkup = 
-//     `
-//     <section class="edit_caption">
-//         <input type="text" class="edit_input">
-//         <div class="response_controls">
-//             <button class="cancel">Cancel</button>
-//             <button class="ok">Ok</button>
-//         </div>
-//     </section>
-//     `;
-//     renderMarkup(captionContainer, 'beforeend', editPopupMarkup);
-// });
 
-// captionContainer?.addEventListener('click', function(e) {
-//     if (e.target.classList.contains('ok') || e.target.classList.contains('cancel')) {
-//         console.log(clickedId);
-//         e.target.closest('.edit_caption').remove();
-//     }
-// })
 
-// editCaptionContainer?.addEventListener('click', function(e) {
-//     console.log('w')
-//     // if (e.target.closest('.response_controls')) {
-//     //     e.target.closest('.edit_caption').remove();
-//     // }
-// })
 
 
