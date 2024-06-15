@@ -170,6 +170,9 @@ figure img {
 .hidden {
     display: none;
 }
+.blur {
+    filter: blur(5px);
+}
 
 /* GENERAL STYLES */
 button {
