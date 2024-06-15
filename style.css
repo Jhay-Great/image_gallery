@@ -72,8 +72,8 @@ main {
     z-index: 2;
 
     width: min(50%, 200px);
-    background: red;
-    background: blue;
+    /* background: red; */
+    /* background: blue; */
 
     display: flex;
     justify-content: center;
@@ -91,14 +91,14 @@ main {
     width: 90%;
     height: 90%;
     aspect-ratio: 16 / 9;
-    background: red;
+    /* background: red; */
 
     position: relative;
 }
 figure > div {
     width: 500px;
     height: 100px;
-    background: green;
+    /* background: green; */
     position: absolute;
     bottom: 0;
     left: 0;
@@ -154,6 +154,11 @@ figure > div {
 .cancel {
     width: 100px;
 }
+figure img {
+    object-fit: contain;
+
+}
+
 
 
 
@@ -168,4 +173,8 @@ figure > div {
 /* GENERAL STYLES */
 button {
     cursor: pointer;
+}
+img {
+    width: 100%;
+    height: 100%;
 }
