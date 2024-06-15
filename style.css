@@ -95,15 +95,61 @@ main {
 
     position: relative;
 }
+figure > div {
+    width: 500px;
+    height: 100px;
+    background: green;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    padding: 0 1rem;
+    gap: 10px;
+}
 .caption {
+    flex: 1;
+    padding-top: .4rem;
+}
+/* .caption {
     width: 500px;
     height: 150px;
     background: green;
     position: absolute;
     bottom: 0;
     left: 0;
+} */
+.edit-btn {
+    border: none;
+    background-color: transparent;
 }
 
+.edit-btn img {
+    width: 30px;
+}
+.edit_caption {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+
+    background: #eee;
+}
+.edit_caption input {
+    grid-column: 1 / -1;
+}
+.ok {
+    grid-column: 3 / 4;
+}
+.cancel {
+    grid-column: 2 / 3;
+}
 
 
 
