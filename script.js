@@ -14,18 +14,24 @@ const cancelBtn = document.querySelector('.cancel');
 
 // image data
 const imageDB = [
-    {id: 0, imageURL : 'female_designer.jpg', thumbnailURL : '', caption: 'Cute girl in front of her computer'},
-    {id: 1, imageURL : 'img2.jpg', thumbnailURL : '', caption: 'beautiful smoky background'},
-    {id: 2, imageURL : 'mid-day_highway.jpg', thumbnailURL : '', caption: 'Highway background image'},
-    {id: 3, imageURL : 'awesome_painting.jpg', thumbnailURL : '', caption: 'artistic oil painting'},
-    {id: 4, imageURL : 'water-droplets.jpg', thumbnailURL : '', caption: 'Water droplet image'},
-    {id: 5, imageURL : 'stars.jpg', thumbnailURL : '', caption: 'stars above the sky'},
-    {id: 6, imageURL : 'cube.jpg', thumbnailURL : '', caption: 'transparent cube'},
-    {id: 7, imageURL : 'male_programmer.jpg', thumbnailURL : '', caption: 'male programer'},
-    {id: 8, imageURL : 'male_programmer.jpg', thumbnailURL : '', caption: 'male programer'},
-    {id: 9, imageURL : 'male_programmer.jpg', thumbnailURL : '', caption: 'male programer'},
-    {id: 10, imageURL : 'male_programmer.jpg', thumbnailURL : '', caption: 'male programer'},
-    {id: 11, imageURL : 'male_programmer.jpg', thumbnailURL : '', caption: 'male programer'},
+    {id: 0, imageURL : 'female_designer.jpg', thumbnailURL : 'mimi_female_designer.jpg', caption: 'Cute girl in front of her computer'},
+    {id: 1, imageURL : 'smoky.jpg', thumbnailURL : 'mimi_smoky.jpg', caption: 'beautiful smoky background'},
+    {id: 2, imageURL : 'mid-day_highway.jpg', thumbnailURL : 'mimi_mid-day_highway.jpg', caption: 'Highway background image'},
+    {id: 3, imageURL : 'awesome_painting.jpg', thumbnailURL : 'mimi_awesome_painting.jpg', caption: 'artistic oil painting'},
+    {id: 4, imageURL : 'water-droplets.jpg', thumbnailURL : 'mimi_water-droplets.jpg', caption: 'Water droplet image'},
+    {id: 5, imageURL : 'stars.jpg', thumbnailURL : 'mimi_stars.jpg', caption: 'stars above the sky'},
+    {id: 6, imageURL : 'cube.jpg', thumbnailURL : 'mimi_cube.jpg', caption: 'transparent cube'},
+    {id: 7, imageURL : 'male_programmer.jpg', thumbnailURL : 'mimi_male_programmer.jpg', caption: 'male programer'},
+    {id: 8, imageURL : 'bike.jpg', thumbnailURL : 'mimi_bike.jpg', caption: 'male programer'},
+    {id: 9, imageURL : 'falls.jpg', thumbnailURL : 'mimi_falls.jpg', caption: 'male programer'},
+    {id: 10, imageURL : 'hill.jpg', thumbnailURL : 'mimi_hill.jpg', caption: 'male programer'},
+    {id: 11, imageURL : 'stuff.jpg', thumbnailURL : 'mimi_stuff.jpg', caption: 'male programer'},
+    {id: 12, imageURL : 'party.jpg', thumbnailURL : 'mimi_party.jpg', caption: 'male programer'},
+    {id: 13, imageURL : 'forest.jpg', thumbnailURL : 'mimi_forest.jpg', caption: 'male programer'},
+    {id: 14, imageURL : 'cup.jpg', thumbnailURL : 'mimi_cup.jpg', caption: 'male programer'},
+    {id: 15, imageURL : 'red_cube.jpg', thumbnailURL : 'mimi_red_cude.jpg', caption: 'male programer'},
+    {id: 16, imageURL : 'soundbox.jpg', thumbnailURL : 'mimi_soundbox.jpg', caption: 'male programer'},
+    {id: 17, imageURL : 'waterfall.jpg', thumbnailURL : 'mimi_waterfall.jpg', caption: 'male programer'},
 ];
 let clickedId;
 
@@ -51,16 +57,47 @@ document.addEventListener('DOMContentLoaded', function(e) {
         const markup = 
         `
             <!-- thumbnail element -->
-            <div class="thumbnail_image" data-key=${image.id}>
+            <div class="thumbnail_image blur" data-key=${image.id}>
                 <!-- alt text for accessibility -->
                     
-              <img src="./assets/images/${image.imageURL}" alt="${image.caption}"> 
+              <img src="./assets/mimified_imgs/${image.thumbnailURL}" alt="${image.caption}"  data-img="./assets/images/${image.imageURL}"> 
             </div>
         `;
 
         renderMarkup(galleryContainer, 'beforeend', markup);
+
+        
     })
+
+    // const imgElements = document.querySelectorAll('.thumbnail_image');
+    const imgElements = document.querySelectorAll('img[data-img]');
+
+    // using intersection observer 
+    const options = {
+        root: null,
+        threshold: 0,
+    }
+    const observerFn = function(entries) {
+
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+
+            entry.target.src = entry.target.dataset.img;
+
+            entry.target.addEventListener('load', function() {
+                this.closest('.thumbnail_image').classList.remove('blur');
+            })
+            
+        })
+        // console.log(entries)
+    }
+    const observer = new IntersectionObserver(observerFn, options)
+    imgElements.forEach(element => observer.observe(element))
+
 })
+
+
+
 
 /**lightbox 
  * when an image is clicked it should open up
@@ -191,19 +228,14 @@ const nextImage = function(e, index) {
 }
 
 
-/**slide implementation
- * when an image is clicked or when the lightbox modal is opened show all the images
- * load or select all the images as an array of images or content
- * the clicked image would be on display
- * next and previous button would iterate through displaying the images
- * so the current image would be the index or the date-key
- * iterate using the index or the data key
- * 
- * how
- * access the index number and increase and decrease
- * when previous index === 0 disable previous btn
- * when next index === imagedb.length disable next btn
+/**lazy loading
+ * select all the original image from the data attribute
+ * try listen to the load event on it
+ * if loaded then set the img src attribute to the data attribute value
  */
+const lazyLoading = function() {
+
+}
 
 
 
