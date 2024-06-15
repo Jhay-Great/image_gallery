@@ -135,21 +135,26 @@ figure > div {
     width: 100%;
     height: 100%;
 
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    display: flex;
+    flex-direction: column;
     gap: 10px;
 
     background: #eee;
 }
-.edit_caption input {
-    grid-column: 1 / -1;
+.edit_caption input,
+.response_controls {
+    flex: 1;
 }
-.ok {
-    grid-column: 3 / 4;
+.response_controls {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
 }
+.ok, 
 .cancel {
-    grid-column: 2 / 3;
+    width: 100px;
 }
+
 
 
 
