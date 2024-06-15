@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
  */
 mainContainer.addEventListener('click', function(e) {
     if (e.target.closest('.thumbnail_image')) {
-        clickedId = e.target.closest('.thumbnail_image').dataset.key;
+        clickedId = +e.target.closest('.thumbnail_image').dataset.key;
         // opening lightbox using classLists
         // lightboxContainer.classList.remove('hidden');
 
@@ -158,16 +158,37 @@ mainContainer.addEventListener('click', function(e) {
 
 
     // navigation - moving left or right
-    if (e.target.closest('.previous-btn')) {
-        console.log('previous');
-        console.log(imageDB[clickedId - 1]);
-    }
+    (clickedId < 1) && document.querySelector('.previous-btn')?.classList.add('hidden');
+    (clickedId >= imageDB.length - 1) && document.querySelector('.next-btn')?.classList.add('hidden');
 
+    if (e.target.closest('.previous-btn')) {        
+        // const imgElement = e.target.closest('.lightbox_container').querySelector('figure > img')
+        // imgElement.setAttribute('src', `./assets/images/${imageDB[clickedId - 1].imageURL}`);
+        previousImage(e, clickedId);
+
+
+        clickedId -= 1;
+        (clickedId < 1) && e.target.closest('.previous-btn').classList.add('hidden');
+        e.target.closest('.navigations').querySelector('.next-btn').classList.remove('hidden');   
+    }
+    
     if (e.target.closest('.next-btn')) {
-        console.log('next')
+        nextImage(e, clickedId);
+        clickedId += 1;
+        (clickedId === imageDB.length - 1) && e.target.closest('.next-btn').classList.add('hidden');
+        e.target.closest('.navigations').querySelector('.previous-btn').classList.remove('hidden');
     }
 
 })
+
+const previousImage = function(e, index) {
+    const imgElement = e.target.closest('.lightbox_container').querySelector('figure > img')
+    imgElement.setAttribute('src', `./assets/images/${imageDB[index - 1].imageURL}`);
+}
+const nextImage = function(e, index) {
+    const imgElement = e.target.closest('.lightbox_container').querySelector('figure > img')
+    imgElement.setAttribute('src', `./assets/images/${imageDB[index + 1].imageURL}`);
+}
 
 
 /**slide implementation
@@ -177,6 +198,11 @@ mainContainer.addEventListener('click', function(e) {
  * next and previous button would iterate through displaying the images
  * so the current image would be the index or the date-key
  * iterate using the index or the data key
+ * 
+ * how
+ * access the index number and increase and decrease
+ * when previous index === 0 disable previous btn
+ * when next index === imagedb.length disable next btn
  */
 
 
