@@ -106,8 +106,6 @@ document.addEventListener('DOMContentLoaded', function(e) {
 mainContainer.addEventListener('click', function(e) {
     if (e.target.closest('.thumbnail_image')) {
         clickedId = +e.target.closest('.thumbnail_image').dataset.key;
-        // opening lightbox using classLists
-        // lightboxContainer.classList.remove('hidden');
 
         // opening lightbox dynamic from js
         const lightboxMarkup = 
@@ -140,16 +138,12 @@ mainContainer.addEventListener('click', function(e) {
             </figure>
         </section>
         `
-        // ./assets/images/${image.imageURL}
         renderMarkup(mainContainer, 'beforeend', lightboxMarkup);
-        
         return;
         
     }
     if (e.target.closest('.close-btn')) {
         e.target.closest('.lightbox_container').remove()
-        // lightboxContainer.classList.add('hidden');
-
         return;
     }
 })
@@ -159,8 +153,6 @@ mainContainer.addEventListener('click', function(e) {
     let updatedCaption = '';
 
     if (e.target && e.target.closest('.edit-btn')) {
-        // console.log(imageDB[clickedId].caption);
-
         const editPopupMarkup = 
         `
         <section class="edit_caption">
@@ -178,14 +170,9 @@ mainContainer.addEventListener('click', function(e) {
     // if e.target is ok
     if (e.target.classList.contains('ok')) {
         updatedCaption = e.target.closest('.edit_caption').querySelector('input').value;
-        console.log(updatedCaption);
         imageDB[clickedId].caption = updatedCaption;
-        console.log(imageDB[clickedId].caption);
 
         e.target.closest('.caption_container').querySelector('.caption').textContent = updatedCaption;
-
-        // // removing element from DOM
-        // e.target.closest('.edit_caption').remove();
     }
     
     // closing the edit popup
@@ -234,11 +221,7 @@ const nextImage = function(e, index) {
 }
 
 
-/**lazy loading
- * select all the original image from the data attribute
- * try listen to the load event on it
- * if loaded then set the img src attribute to the data attribute value
- */
+
 const lazyLoading = function() {
 
 }
