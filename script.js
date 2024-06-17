@@ -139,11 +139,13 @@ mainContainer.addEventListener('click', function(e) {
         </section>
         `
         renderMarkup(mainContainer, 'beforeend', lightboxMarkup);
+        document.querySelector('body').classList.add('noscroll');
         return;
         
     }
     if (e.target.closest('.close-btn')) {
         e.target.closest('.lightbox_container').remove()
+        document.querySelector('body').classList.remove('noscroll');
         return;
     }
 })
