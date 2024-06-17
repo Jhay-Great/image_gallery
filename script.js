@@ -97,57 +97,19 @@ document.addEventListener('DOMContentLoaded', function(e) {
 mainContainer.addEventListener('click', function(e) {
     if (e.target.closest('.thumbnail_image')) {
         clickedId = +e.target.closest('.thumbnail_image').dataset.key;
-
-        // opening lightbox dynamic from js
-        const lightboxMarkup = 
-        `
-        <!-- ligthbox container -->
-        <section class="lightbox_container  ">
-            <!-- close btn -->
-            <button class="close-btn">
-                <img src="./assets/svgs/close.svg" alt="close button svg">
-            </button>
-            <!-- navigation btn -->
-             <div class="navigations">
-                 <button class="previous-btn">
-                     <img src="./assets/svgs/previous.svg" alt="previous button svg">
-                 </button>
-                 <button class="next-btn">
-                     <img src="./assets/svgs/next.svg" alt="next button svg">
-                 </button>
-             </div>
-            <!-- image container -->
-            <figure class="image_container">
-                <img src="./assets/images/${imageDB[clickedId].imageURL}" alt="${imageDB[clickedId].caption}">
-                <!-- caption -->
-                 <div class="caption_container">
-                     <figcaption class="caption">${imageDB[clickedId].caption}</figcaption>
-                     <button class="edit-btn">
-                         <img src="./assets/svgs/edit.svg" alt="edit icon svg">
-                     </button>
-                 </div>
-            </figure>
-        </section>
-        `
-        renderMarkup(mainContainer, 'beforeend', lightboxMarkup);
+        
+        renderMarkup(mainContainer, 'beforeend', lightboxMarkup(imageDB, clickedId));
         document.querySelector('body').classList.add('noscroll');
         return;
         
     }
     if (e.target.closest('.close-btn')) {
-        e.target.closest('.lightbox_container').remove()
+        e.target.closest('.lightbox_container').remove();
         document.querySelector('body').classList.remove('noscroll');
         return;
     }
 })
 
-/**loading effect
- * when you click on a selected image
- * the lightbox container or markup is pushed to the DOM and parsed with the thumbnail
- * listen to the load of the original or the high image
- * animate the loading effect
- * when load is complete display image
- */
 
 // 
 mainContainer.addEventListener('click', function(e) {
@@ -171,9 +133,9 @@ mainContainer.addEventListener('click', function(e) {
     // if e.target is ok
     if (e.target.classList.contains('ok')) {
         updatedCaption = e.target.closest('.edit_caption').querySelector('input').value;
-        imageDB[clickedId].caption = updatedCaption;
+        imageDB[clickedId].caption = capitalize(updatedCaption);
 
-        e.target.closest('.caption_container').querySelector('.caption').textContent = updatedCaption;
+        e.target.closest('.caption_container').querySelector('.caption').textContent = capitalize(updatedCaption);
     }
     
     // closing the edit popup
@@ -202,7 +164,7 @@ const previousImage = function(e, index) {
 
     imgElement.setAttribute('src', `./assets/images/${imageDB[index - 1].imageURL}`);
     imgElement.setAttribute('alt', `${imageDB[index - 1].caption}`);
-    captionElement.textContent = `${imageDB[index - 1].caption}`;
+    captionElement.textContent = `${capitalize(imageDB[index - 1].caption)}`;
 
     clickedId -= 1;
     (clickedId < 1) && e.target.closest('.previous-btn').classList.add('hidden');
@@ -216,7 +178,7 @@ const nextImage = function(e, index) {
 
     imgElement.setAttribute('src', `./assets/images/${imageDB[index + 1].imageURL}`);
     imgElement.setAttribute('alt', `${imageDB[index + 1].caption}`);
-    captionElement.textContent = `${imageDB[index + 1].caption}`;
+    captionElement.textContent = `${capitalize(imageDB[index + 1].caption)}`;
 
     clickedId += 1;
     (clickedId === imageDB.length - 1) && e.target.closest('.next-btn').classList.add('hidden');
@@ -234,6 +196,43 @@ const thumbnailMarkup = function(imageData) {
           <img src="./assets/mimified_imgs/${imageData.thumbnailURL}" alt="${imageData.caption}"  data-img="./assets/images/${imageData.imageURL}"> 
         </div>
     `;
+}
+
+const lightboxMarkup = function(imageCollection, index) {
+    return `
+    <!-- ligthbox container -->
+    <section class="lightbox_container  ">
+        <!-- close btn -->
+        <button class="close-btn">
+            <img src="./assets/svgs/close.svg" alt="close button svg">
+        </button>
+        <!-- navigation btn -->
+         <div class="navigations">
+             <button class="previous-btn">
+                 <img src="./assets/svgs/previous.svg" alt="previous button svg">
+             </button>
+             <button class="next-btn">
+                 <img src="./assets/svgs/next.svg" alt="next button svg">
+             </button>
+         </div>
+        <!-- image container -->
+        <figure class="image_container">
+            <img src="./assets/images/${imageCollection[index].imageURL}" alt="${imageCollection[index].caption}">
+            <!-- caption -->
+             <div class="caption_container">
+                 <figcaption class="caption">${capitalize(imageCollection[index].caption)}</figcaption>
+                 <button class="edit-btn">
+                     <img src="./assets/svgs/edit.svg" alt="edit icon svg">
+                 </button>
+             </div>
+        </figure>
+    </section>
+    `
+}
+
+
+const capitalize = function(word) {
+    return word.replace(word.at(0), word.at(0).toUpperCase())
 }
 
 
