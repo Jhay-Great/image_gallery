@@ -181,6 +181,9 @@ figure img {
 .blur {
     filter: blur(5px);
 }
+.disable_mouse_event {
+    pointer-events: none;
+}
 .noscroll {
     overflow: hidden;
     position: fixed;

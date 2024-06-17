@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
         `;
 
         renderMarkup(galleryContainer, 'beforeend', markup);
-
+        document.querySelector('body').classList.add('disable_mouse_event');
         
     })
 
@@ -86,10 +86,11 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
             entry.target.addEventListener('load', function() {
                 this.closest('.thumbnail_image').classList.remove('blur');
+                document.querySelector('body').classList.remove('disable_mouse_event');
+
             })
             
-        })
-        // console.log(entries)
+        });
     }
     const observer = new IntersectionObserver(observerFn, options)
     imgElements.forEach(element => observer.observe(element))
@@ -184,25 +185,15 @@ mainContainer.addEventListener('click', function(e) {
 
 
     // navigation - moving left or right
-    (clickedId < 1) && document.querySelector('.previous-btn')?.classList.add('hidden');
-    (clickedId >= imageDB.length - 1) && document.querySelector('.next-btn')?.classList.add('hidden');
+    // (clickedId < 1) && document.querySelector('.previous-btn')?.classList.add('hidden');
+    // (clickedId >= imageDB.length - 1) && document.querySelector('.next-btn')?.classList.add('hidden');
 
-    if (e.target.closest('.previous-btn')) {        
-        // const imgElement = e.target.closest('.lightbox_container').querySelector('figure > img')
-        // imgElement.setAttribute('src', `./assets/images/${imageDB[clickedId - 1].imageURL}`);
+    if (e.target.closest('.previous-btn')) {
         previousImage(e, clickedId);
-
-
-        clickedId -= 1;
-        (clickedId < 1) && e.target.closest('.previous-btn').classList.add('hidden');
-        e.target.closest('.navigations').querySelector('.next-btn').classList.remove('hidden');   
     }
     
     if (e.target.closest('.next-btn')) {
         nextImage(e, clickedId);
-        clickedId += 1;
-        (clickedId === imageDB.length - 1) && e.target.closest('.next-btn').classList.add('hidden');
-        e.target.closest('.navigations').querySelector('.previous-btn').classList.remove('hidden');
     }
 
 })
@@ -210,23 +201,35 @@ mainContainer.addEventListener('click', function(e) {
 const previousImage = function(e, index) {
     const imgElement = e.target.closest('.lightbox_container').querySelector('figure > img');
     const captionElement = e.target.closest('.lightbox_container').querySelector('figcaption');
+
     imgElement.setAttribute('src', `./assets/images/${imageDB[index - 1].imageURL}`);
     imgElement.setAttribute('alt', `${imageDB[index - 1].caption}`);
-    captionElement.textContent = `${imageDB[index - 1].caption}`
+    captionElement.textContent = `${imageDB[index - 1].caption}`;
+
+    clickedId -= 1;
+    (clickedId < 1) && e.target.closest('.previous-btn').classList.add('hidden');
+    e.target.closest('.navigations').querySelector('.next-btn').classList.remove('hidden');  
+
+    return;
 }
 const nextImage = function(e, index) {
     const imgElement = e.target.closest('.lightbox_container').querySelector('figure > img')
     const captionElement = e.target.closest('.lightbox_container').querySelector('figcaption');
+
     imgElement.setAttribute('src', `./assets/images/${imageDB[index + 1].imageURL}`);
     imgElement.setAttribute('alt', `${imageDB[index + 1].caption}`);
-    captionElement.textContent = `${imageDB[index + 1].caption}`
+    captionElement.textContent = `${imageDB[index + 1].caption}`;
+
+    clickedId += 1;
+    (clickedId === imageDB.length - 1) && e.target.closest('.next-btn').classList.add('hidden');
+    e.target.closest('.navigations').querySelector('.previous-btn').classList.remove('hidden');
+
+    return;
 }
 
 
 
-const lazyLoading = function() {
 
-}
 
 
 
