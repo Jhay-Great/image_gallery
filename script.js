@@ -22,16 +22,16 @@ const imageDB = [
     {id: 5, imageURL : 'stars.jpg', thumbnailURL : 'mimi_stars.jpg', caption: 'stars above the sky'},
     {id: 6, imageURL : 'cube.jpg', thumbnailURL : 'mimi_cube.jpg', caption: 'transparent cube'},
     {id: 7, imageURL : 'male_programmer.jpg', thumbnailURL : 'mimi_male_programmer.jpg', caption: 'male programer'},
-    {id: 8, imageURL : 'bike.jpg', thumbnailURL : 'mimi_bike.jpg', caption: 'male programer'},
-    {id: 9, imageURL : 'falls.jpg', thumbnailURL : 'mimi_falls.jpg', caption: 'male programer'},
-    {id: 10, imageURL : 'hill.jpg', thumbnailURL : 'mimi_hill.jpg', caption: 'male programer'},
-    {id: 11, imageURL : 'stuff.jpg', thumbnailURL : 'mimi_stuff.jpg', caption: 'male programer'},
-    {id: 12, imageURL : 'party.jpg', thumbnailURL : 'mimi_party.jpg', caption: 'male programer'},
-    {id: 13, imageURL : 'forest.jpg', thumbnailURL : 'mimi_forest.jpg', caption: 'male programer'},
-    {id: 14, imageURL : 'cup.jpg', thumbnailURL : 'mimi_cup.jpg', caption: 'male programer'},
-    {id: 15, imageURL : 'red_cube.jpg', thumbnailURL : 'mimi_red_cude.jpg', caption: 'male programer'},
-    {id: 16, imageURL : 'soundbox.jpg', thumbnailURL : 'mimi_soundbox.jpg', caption: 'male programer'},
-    {id: 17, imageURL : 'waterfall.jpg', thumbnailURL : 'mimi_waterfall.jpg', caption: 'male programer'},
+    {id: 8, imageURL : 'bike.jpg', thumbnailURL : 'mimi_bike.jpg', caption: 'steel bike'},
+    {id: 9, imageURL : 'falls.jpg', thumbnailURL : 'mimi_falls.jpg', caption: 'water fall'},
+    {id: 10, imageURL : 'hill.jpg', thumbnailURL : 'mimi_hill.jpg', caption: 'Amazing pictograph of a hill'},
+    {id: 11, imageURL : 'stuff.jpg', thumbnailURL : 'mimi_stuff.jpg', caption: 'collection of items'},
+    {id: 12, imageURL : 'party.jpg', thumbnailURL : 'mimi_party.jpg', caption: 'Night life'},
+    {id: 13, imageURL : 'forest.jpg', thumbnailURL : 'mimi_forest.jpg', caption: 'Amazon forest'},
+    {id: 14, imageURL : 'cup.jpg', thumbnailURL : 'mimi_cup.jpg', caption: 'a cup of water'},
+    {id: 15, imageURL : 'red_cube.jpg', thumbnailURL : 'mimi_red_cude.jpg', caption: 'hot red cube'},
+    {id: 16, imageURL : 'soundbox.jpg', thumbnailURL : 'mimi_soundbox.jpg', caption: 'sound engineer items'},
+    {id: 17, imageURL : 'waterfall.jpg', thumbnailURL : 'mimi_waterfall.jpg', caption: 'beautiful waterfall'},
 ];
 let clickedId;
 
@@ -54,19 +54,7 @@ const addHidden = function(container, activity) {
 // rendering images on start
 document.addEventListener('DOMContentLoaded', function(e) {
     imageDB.forEach(image => {
-        const markup = 
-        `
-            <!-- thumbnail element -->
-            <div class="thumbnail_image blur" data-key=${image.id}>
-                <!-- alt text for accessibility -->
-                    
-              <img src="./assets/mimified_imgs/${image.thumbnailURL}" alt="${image.caption}"  data-img="./assets/images/${image.imageURL}"> 
-            </div>
-        `;
-
-        renderMarkup(galleryContainer, 'beforeend', markup);
-        document.querySelector('body').classList.add('disable_mouse_event');
-        
+        renderMarkup(galleryContainer, 'beforeend', thumbnailMarkup(image));
     })
 
     // const imgElements = document.querySelectorAll('.thumbnail_image');
@@ -82,11 +70,13 @@ document.addEventListener('DOMContentLoaded', function(e) {
         entries.forEach(entry => {
             if (!entry.isIntersecting) return;
 
-            entry.target.src = entry.target.dataset.img;
+            // entry.target.src = entry.target.dataset.img;
+            entry.target.closest('.thumbnail_image').classList.remove('blur');
+            entry.target.closest('.thumbnail_image').classList.remove('disable_mouse_event');
 
             entry.target.addEventListener('load', function() {
                 this.closest('.thumbnail_image').classList.remove('blur');
-                document.querySelector('body').classList.remove('disable_mouse_event');
+                this.closest('.thumbnail_image').classList.remove('disable_mouse_event');
 
             })
             
@@ -150,6 +140,14 @@ mainContainer.addEventListener('click', function(e) {
         return;
     }
 })
+
+/**loading effect
+ * when you click on a selected image
+ * the lightbox container or markup is pushed to the DOM and parsed with the thumbnail
+ * listen to the load of the original or the high image
+ * animate the loading effect
+ * when load is complete display image
+ */
 
 // 
 mainContainer.addEventListener('click', function(e) {
@@ -225,6 +223,17 @@ const nextImage = function(e, index) {
     e.target.closest('.navigations').querySelector('.previous-btn').classList.remove('hidden');
 
     return;
+}
+
+const thumbnailMarkup = function(imageData) {
+    return `
+        <!-- thumbnail element -->
+        <div class="thumbnail_image disable_mouse_event blur" data-key=${imageData.id}>
+            <!-- alt text for accessibility -->
+                
+          <img src="./assets/mimified_imgs/${imageData.thumbnailURL}" alt="${imageData.caption}"  data-img="./assets/images/${imageData.imageURL}"> 
+        </div>
+    `;
 }
 
 
